@@ -1,3 +1,4 @@
+const { check } = require('prettier');
 const { Site, Board, Article, Comment } = require('.');
 
 describe('Site 요구사항 테스트', () => {
@@ -53,7 +54,6 @@ describe('Board 요구사항 테스트', () => {
         // NOTE: Reset `mySite`
         mySite = new Site();
     });
-
     test('Board는 name 데이터를 포함해야 하며 null 또는 빈 문자열("")은 허용하지 않는다.', () => {
         expect(() => {
             const _board = new Board('공지사항');
@@ -71,7 +71,6 @@ describe('Board 요구사항 테스트', () => {
     test('Site 에 추가된 Board만 사용 가능한 것으로 간주하며 사용 불가능한 Board에는 Article을 추가할 수 없다.', () => {
         const addedBoard = new Board('사이트에 추가된 게시판');
         const notAddedBoard = new Board('사이트에 추가되지 않은 게시판');
-
         mySite.addBoard(addedBoard);
 
         expect(() => {
@@ -82,7 +81,6 @@ describe('Board 요구사항 테스트', () => {
             });
             addedBoard.publish(article);
         }).not.toThrow();
-
         expect(() => {
             const article = new Article({
                 subject: '글 제목2',
@@ -91,6 +89,7 @@ describe('Board 요구사항 테스트', () => {
             });
             notAddedBoard.publish(article);
         }).toThrow();
+        console.log(mySite)
     });
 
     test('Board에 Article을 추가할 때 Article에 ID를 자동 생성해서 부여해야 한다.', () => {
